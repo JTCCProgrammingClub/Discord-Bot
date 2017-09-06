@@ -1,33 +1,29 @@
 //Call package
-var Discord = require("discord.js");
-var caterpieBot = new Discord.Client();
-var nextClubMeeting;
+var Discord = require("discord.js"); // require the installed discord package to run
+var caterpieBot = new Discord.Client(); //create new discord client
+var nextClubMeeting; //variable to hold the club meeting date (currently does NOT persist)
 
 //Listener Event for recieved messages
-caterpieBot.on("message", message =>
+caterpieBot.on("message", message => //this is called every time the bot reads a message.
 {
-  var commands = [" !Terminate", " !Restart", " !Commands", " !Caterpiefact", " !Pokefact"];
+  var commands = [" !Terminate", " !Restart", " !Commands", " !Caterpiefact", " !Pokefact"]; //All bot commands
   var pokeFacts = ["Cubone wears the skull of its dead mother like a mask.",
   "The name Pokemon isn't Japanese at all! It's really just a combination of 'pocket' and 'monster.'",
-  "Kabutops cut open prey with their claws, then suck up the spilled bodily fluids."];
+  "Kabutops cut open prey with their claws, then suck up the spilled bodily fluids."]; //database of pokefacts
   var randomNumber;
 
   var sender = message.author; // who sent the message
   var msg = message.content.toUpperCase(); // convert message to all uppercase letters
   var prefix = "!" //command to interact with caterpieBot
-  var tempMsg = msg;
-  var splitMsg = tempMsg.split(":")
+  var tempMsg = msg; //set msg to a tempmsg
+  var splitMsg = tempMsg.split(":") //split the string into two strings when finding the character ":"
 
 
   if(splitMsg[0] === "CATERPIE, PLEASE SCHEDULE OUR NEXT CLUB MEETING FOR")
   {
       message.channel.send("Yes " + sender + ", I will schedule the next club meeting for: " + splitMsg[1])
 
-      nextClubMeeting = splitMsg[1];
-      //File fileee = new File("C:\Users\bbbbbbbbbbbbbbbbbb\Desktop\Caterpie Bot");
-      //BufferedWriter writer = new BufferedWriter(new FileWriter(new File("ClubMeetingInfo.txt")));
-    //  writer.write(nextClubMeeting);
-      //writer.close();
+      nextClubMeeting = splitMsg[1]; //Set club meeting to the second part of the message (the date)
 
       console.log(nextClubMeeting);
   }
@@ -52,7 +48,7 @@ caterpieBot.on("message", message =>
 
   if(msg === prefix + "RESTART")
   {
-      Process.RESTART();
+      Process.RESTART(); //currently does not work properly. (i think?)
   }
 
   if(msg === prefix + "COMMANDS") //command that a user may enter
@@ -60,26 +56,21 @@ caterpieBot.on("message", message =>
       message.channel.send("Here is the current list of Commands: " + commands) // reply to "!caterpiefact"
   }
 
-//  if(msg === prefix + "CATERPIEFACT") //command that a user may enter
-//  {
-//      message.channel.send("There are currently no facts in this database.") // reply to "!caterpiefact"
-//  }
-
   if(msg === prefix + "POKEFACT") //command that a user may enter
   {
-      randomNumber = Math.floor(Math.random() * pokeFacts.length);
-      message.channel.send(pokeFacts[randomNumber]) // reply to "!caterpiefact"
+      randomNumber = Math.floor(Math.random() * pokeFacts.length); //get a random number between 0 and how many pokefacts there are.
+      message.channel.send(pokeFacts[randomNumber]) // send a random string from pokeFacts[]
   }
 });
 
-caterpieBot.on("ready", () =>
+caterpieBot.on("ready", () => //this is called when the bot first starts (only once)
 {
   Clock();
 });
 
 caterpieBot.login("MzUzOTY0NjE4OTQ4ODA0NjA4.DI3W5Q.z5A6nlMHyVJCE8e-ZfrkQ8kGP_I") //Bot"s token found in https://discordapp.com/developers/applications/me/353964618948804608?success=created
 
-function Clock ()
+function Clock () //so the bot can tell what time it was started when it starts (code similiar to the time script we made in csc201 class)
 {
     var currentTime = new Date ( );
 
