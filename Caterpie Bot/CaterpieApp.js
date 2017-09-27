@@ -1,7 +1,14 @@
 //Call package
 var Discord = require("discord.js"); // require the installed discord package to run
+var schedule = require('node-schedule');
 var caterpieBot = new Discord.Client(); //create new discord client
 var nextClubMeeting; //variable to hold the club meeting date (currently does NOT persist)
+
+var onlineMeetingReminder = schedule.scheduleJob('46 21 * * *', function()//'0 3 21 * * *'
+{
+  console.log("test321");
+  caterpieBot.channels.find("name", "bot-testing").send("Its 10:18");
+})
 
 //Listener Event for recieved messages
 caterpieBot.on("message", message => //this is called every time the bot reads a message.
@@ -16,7 +23,7 @@ caterpieBot.on("message", message => //this is called every time the bot reads a
   var msg = message.content.toUpperCase(); // convert message to all uppercase letters
   var prefix = "!" //command to interact with caterpieBot
   var tempMsg = msg; //set msg to a tempmsg
-  var splitMsg = tempMsg.split(":") //split the string into two strings when finding the character ":"
+  var splitMsg = tempMsg.split(":"); //split the string into two strings when finding the character ":"
 
 
   if(splitMsg[0] === "CATERPIE, PLEASE SCHEDULE OUR NEXT CLUB MEETING FOR")
@@ -33,7 +40,10 @@ caterpieBot.on("message", message => //this is called every time the bot reads a
       //message.channel.send(msg) // reply to "!caterpiefact"
       message.channel.send("The next club meeting is scheduled for: " + nextClubMeeting)
   }
-
+  if(msg === "HI CATERPIE")
+  {
+      message.channel.send("Hello " + sender)
+  }
   if(msg === prefix + "CATERPIE")
   {
       //message.channel.send(msg) // reply to "!caterpiefact"
@@ -65,7 +75,7 @@ caterpieBot.on("message", message => //this is called every time the bot reads a
 
 caterpieBot.on("ready", () => //this is called when the bot first starts (only once)
 {
-  Clock();
+  //Clock();
 });
 
 caterpieBot.login("MzUzOTY0NjE4OTQ4ODA0NjA4.DI3W5Q.z5A6nlMHyVJCE8e-ZfrkQ8kGP_I") //Bot"s token found in https://discordapp.com/developers/applications/me/353964618948804608?success=created
