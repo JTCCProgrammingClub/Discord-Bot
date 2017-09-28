@@ -1,13 +1,27 @@
 //Call package
 var Discord = require("discord.js"); // require the installed discord package to run
-var schedule = require('node-schedule');
+var ontime = require('ontime');
 var caterpieBot = new Discord.Client(); //create new discord client
 var nextClubMeeting; //variable to hold the club meeting date (currently does NOT persist)
 
-var onlineMeetingReminder = schedule.scheduleJob('46 21 * * *', function()//'0 3 21 * * *'
+ontime({
+    cycle: ['Thursday 19:37:20']
+},
+function (meetingNotice)
 {
-  console.log("test321");
-  caterpieBot.channels.find("name", "bot-testing").send("Its 10:18");
+    caterpieBot.channels.find("name", "general").send("@everyone REMINDER: Online meeting is in 2 hours at 9:00PM.");
+    meetingNotice.done();
+    return;
+})
+
+ontime({
+    cycle: ['Thursday 20:37:20']
+},
+function (meetingNoticeTwo)
+{
+    caterpieBot.channels.find("name", "general").send("@everyone REMINDER: Online meeting is in 1 hour at 9:00PM.");
+    meetingNoticeTwo.done();
+    return;
 })
 
 //Listener Event for recieved messages
