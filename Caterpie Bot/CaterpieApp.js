@@ -5,7 +5,7 @@ var caterpieBot = new Discord.Client(); //create new discord client
 var nextClubMeeting; //variable to hold the club meeting date (currently does NOT persist)
 
 ontime({
-    cycle: ['Thursday 19:37:20']
+    cycle: ['Thursday 19:00:00']
 },
 function (meetingNotice)
 {
@@ -15,7 +15,7 @@ function (meetingNotice)
 })
 
 ontime({
-    cycle: ['Thursday 20:37:20']
+    cycle: ['Thursday 20:00:00']
 },
 function (meetingNoticeTwo)
 {
@@ -89,7 +89,7 @@ caterpieBot.on("message", message => //this is called every time the bot reads a
 
 caterpieBot.on("ready", () => //this is called when the bot first starts (only once)
 {
-  //Clock();
+  Clock();
 });
 
 caterpieBot.login("MzUzOTY0NjE4OTQ4ODA0NjA4.DI3W5Q.z5A6nlMHyVJCE8e-ZfrkQ8kGP_I") //Bot"s token found in https://discordapp.com/developers/applications/me/353964618948804608?success=created
